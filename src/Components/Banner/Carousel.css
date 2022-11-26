@@ -1,0 +1,20 @@
+.Carousel {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.slick-slide>div {
+    margin: 0 8px;
+}
+
+.slick-list {
+    margin: 0 8px;
+}
+
+.slick-prev:before {
+    color: darkgray;
+}
+
+.slick-next:before {
+    color: darkgray;
+}

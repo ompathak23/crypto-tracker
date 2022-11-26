@@ -1,0 +1,16 @@
+.banner {
+    background: linear-gradient(180deg, #F8FAFC 0%, rgba(248, 250, 252, 0) 170.94%);
+    margin: 0;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.appbar {
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+    padding-left: 35px;
+    padding-right: 35px;
+}
