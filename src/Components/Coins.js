@@ -133,9 +133,8 @@ function EnhancedTableHead(props) {
     );
 }
 
-const Coins = () => {
+const Coins = (props) => {
     const [coins, setCoins] = useState([])
-
     const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&amp;order=market_cap_desc&amp;per_page=100&amp;page=1&amp;sparkline=false&amp;price_change_percentage=24h%2C7d'
 
     useEffect(() => {
@@ -171,7 +170,7 @@ const Coins = () => {
                             <EnhancedTableHead />
                             <TableBody >
                                 {
-                                    coins.slice((page - 1) * 10, (page - 1) * 10 + 10)
+                                    coins.slice((page - 1) * props.rows, (page - 1) * props.rows + props.rows)
                                         .map((coin, index) => {
                                             // const isItemSelected = isSelected(coin.name);
                                             const labelId = `enhanced-table-checkbox-${index}`;
@@ -319,7 +318,7 @@ const Coins = () => {
                 /> */}
 
                     <Pagination
-                        count={(coins.length / 10).toFixed(0)}
+                        count={(coins.length / props.rows).toFixed(0)}
                         variant="outlined"
                         shape="rounded"
                         style={{
