@@ -22,7 +22,7 @@ const Header = () => {
                         </IconButton>
                         <Typography variant="h6" component="div" sx={{
                             mr: 2,
-                            display: { xs: 'none', md: 'flex' },
+                            //display: { xs: 'none', md: 'flex' },
                             fontWeight: 700,
                             color: 'inherit',
                             letterSpacing: '-.03rem',
@@ -31,7 +31,7 @@ const Header = () => {
                         }}>
                             Crypto Tracker
                         </Typography>
-                        <IconButton size="large" aria-label="search" color="inherit">
+                        <IconButton size="large" aria-label="search" color="inherit" sx={{ display: { xs: 'none', md: 'flex' }, }}>
                             <SearchIcon />
                         </IconButton>
                         <IconButton

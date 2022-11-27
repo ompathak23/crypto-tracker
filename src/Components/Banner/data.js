@@ -13,8 +13,8 @@ export const carouselData = [
     },
     {
         id: 3,
-        title: 'Master Reading Graphs 🏹',
-        description: 'Make trading easier with our intensive guide',
+        title: 'Master Graphs',
+        description: 'Make trading easier with our crypto guide',
         linkImg: 'https://img.freepik.com/free-vector/illustration-holographic-technology_53876-8478.jpg?w=2000'
     },
     {

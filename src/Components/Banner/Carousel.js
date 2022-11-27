@@ -23,11 +23,12 @@ const Carousel = () => {
         initialSlide: 0,
         responsive: [
             {
-                breakpoint: 1024,
+                breakpoint: 512,
                 settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                    infinite: true,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    dots: true,
+                    arrows: false,
                 },
             },
             {
@@ -41,12 +42,11 @@ const Carousel = () => {
                 },
             },
             {
-                breakpoint: 512,
+                breakpoint: 1024,
                 settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    dots: true,
-                    arrows: false,
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    infinite: true,
                 },
             },
         ],
@@ -61,6 +61,9 @@ const Carousel = () => {
                         flexDirection: 'row',
                         borderRadius: '12px',
                         height: 100,
+                        width: {
+                            sm: '100%',
+                        },
                         boxShadow: '0px 0.5px 5px 1px rgba(208, 214, 227, 0.5)'
                     }}>
                         <Box sx={{
@@ -83,10 +86,20 @@ const Carousel = () => {
                                 image={item.linkImg}
                             />
                             <CardContent sx={{ paddingTop: '20px' }}>
-                                <Typography gutterBottom variant="subtitle2" component="div">
+                                <Typography gutterBottom variant="subtitle2" component="div" sx={{
+                                    fontFamily: 'Inter', fontStyle: 'normal', fontSize: {
+                                        sm: '10px',
+                                        md: '14px',
+                                    }
+                                }}>
                                     {item.title}
                                 </Typography>
-                                <Typography variant="body2" color="text.secondary">
+                                <Typography variant="body2" color="text.secondary" sx={{
+                                    fontFamily: 'Inter', fontStyle: 'normal', fontSize: {
+                                        sm: '10px',
+                                        md: '13px',
+                                    }
+                                }}>
                                     {item.description}
                                 </Typography>
                             </CardContent>

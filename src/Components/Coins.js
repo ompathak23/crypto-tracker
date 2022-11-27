@@ -33,6 +33,7 @@ import { Container } from '@mui/system';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined';
 import LinearProgress from '@mui/material/LinearProgress';
+import { Hidden } from '@mui/material';
 
 export function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -43,48 +44,56 @@ const headCells = [
         id: 'rank',
         numeric: false,
         disablePadding: true,
+        visibility: false,
         label: '#',
     },
     {
         id: 'name',
         numeric: false,
         disablePadding: true,
+        visibility: true,
         label: 'NAME',
     },
     {
         id: 'price',
         numeric: true,
         disablePadding: false,
+        visibility: true,
         label: 'PRICE',
     },
     {
         id: '24h',
         numeric: true,
         disablePadding: false,
+        visibility: true,
         label: '24H',
     },
     {
         id: '7d',
         numeric: true,
         disablePadding: false,
+        visibility: false,
         label: '7D',
     },
     {
         id: 'market_cap',
         numeric: true,
         disablePadding: false,
+        visibility: false,
         label: 'MARKET CAP',
     },
     {
         id: 'volume',
         numeric: true,
         disablePadding: false,
+        visibility: false,
         label: 'VOLUME(24H)',
     },
     {
         id: 'supply',
         numeric: true,
         disablePadding: false,
+        visibility: false,
         label: 'CIRCULATING SUPPLY',
     },
 ];
@@ -94,7 +103,7 @@ function EnhancedTableHead(props) {
     return (
         <TableHead>
             <TableRow>
-                <TableCell>
+                <TableCell sx={{ visibility: { sm: 'hidden', md: 'visible' } }}>
 
                 </TableCell>
 
@@ -137,6 +146,7 @@ const Coins = () => {
         })
     }, [])
 
+    // OLD CODE LINE
 
     const [page, setPage] = useState(1);
 
@@ -160,138 +170,139 @@ const Coins = () => {
                         >
                             <EnhancedTableHead />
                             <TableBody >
-                                {coins.slice((page - 1) * 10, (page - 1) * 10 + 10)
-                                    .map((coin, index) => {
-                                        // const isItemSelected = isSelected(coin.name);
-                                        const labelId = `enhanced-table-checkbox-${index}`;
-                                        const profit = coin.price_change_percentage_24h > 0;
-                                        const profit_two = coin.price_change_percentage_7d_in_currency > 0;
+                                {
+                                    coins.slice((page - 1) * 10, (page - 1) * 10 + 10)
+                                        .map((coin, index) => {
+                                            // const isItemSelected = isSelected(coin.name);
+                                            const labelId = `enhanced-table-checkbox-${index}`;
+                                            const profit = coin.price_change_percentage_24h > 0;
+                                            const profit_two = coin.price_change_percentage_7d_in_currency > 0;
 
-                                        return (
-                                            <TableRow
-                                                hover
-                                                role="checkbox"
-                                                tabIndex={-1}
-                                                key={coin.name}
-                                            >
-                                                <TableCell padding="normal">
-                                                    <StarBorderOutlinedIcon
-                                                        sx={{ color: '#ABB4C2' }}
-                                                        fontSize='small' />
-                                                </TableCell>
+                                            return (
+                                                <TableRow
+                                                    hover
+                                                    role="checkbox"
+                                                    tabIndex={-1}
+                                                    key={coin.name}
+                                                >
+                                                    <TableCell padding="normal">
+                                                        <StarBorderOutlinedIcon
+                                                            sx={{ color: '#ABB4C2' }}
+                                                            fontSize='small' />
+                                                    </TableCell>
 
-                                                <TableCell
-                                                    component="th"
-                                                    id={labelId}
-                                                    scope="row"
-                                                    padding="none"
-                                                    style={{
+                                                    <TableCell
+                                                        component="th"
+                                                        id={labelId}
+                                                        scope="row"
+                                                        padding="none"
+                                                        style={{
+                                                            fontFamily: 'Inter', fontStyle: 'normal',
+                                                            fontSize: '12px',
+                                                            fontWeight: 500,
+                                                        }}
+                                                    >
+                                                        {coin.market_cap_rank}
+                                                    </TableCell>
+                                                    <TableCell
+                                                        align="left"
+                                                        scope="row"
+                                                        style={{
+                                                            display: 'flex',
+                                                            flexDirection: 'row',
+                                                            justifyContent: 'left',
+                                                            alignItems: 'center',
+                                                        }}>
+                                                        <img
+                                                            src={coin?.image}
+                                                            alt={coin.name}
+                                                            height="10"
+                                                            style={{ marginBottom: 5, height: 25 }}
+                                                        />
+                                                        <div style={{ display: 'flex', justifyContent: 'left', alignItems: 'center', flexDirection: 'row' }}>
+                                                            <span style={{ fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 600, fontColor: "#222531", }}>{coin.name}</span>
+                                                            &nbsp;
+                                                            <span style={{ fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 300, fontColor: "#808A9D", textTransform: 'uppercase' }}>{coin.symbol}</span>
+                                                        </div>
+
+                                                    </TableCell>
+
+                                                    <TableCell align="right" style={{
                                                         fontFamily: 'Inter', fontStyle: 'normal',
                                                         fontSize: '12px',
                                                         fontWeight: 500,
-                                                    }}
-                                                >
-                                                    {coin.market_cap_rank}
-                                                </TableCell>
-                                                <TableCell
-                                                    align="left"
-                                                    scope="row"
-                                                    style={{
-                                                        display: 'flex',
-                                                        flexDirection: 'row',
-                                                        justifyContent: 'left',
-                                                        alignItems: 'center',
+                                                    }}>${numberWithCommas(coin.current_price.toFixed(2))}</TableCell>
+
+                                                    <TableCell align="right" style={{
+                                                        fontFamily: 'Inter', fontStyle: 'normal',
+                                                        fontSize: '12px', color: profit > 0 ? "#16C784" : "#EA3943",
+                                                        fontWeight: 500,
                                                     }}>
-                                                    <img
-                                                        src={coin?.image}
-                                                        alt={coin.name}
-                                                        height="10"
-                                                        style={{ marginBottom: 5, height: 25 }}
-                                                    />
-                                                    <div style={{ display: 'flex', justifyContent: 'left', alignItems: 'center', flexDirection: 'row' }}>
-                                                        <span style={{ fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 600, fontColor: "#222531", }}>{coin.name}</span>
-                                                        &nbsp;
-                                                        <span style={{ fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 300, fontColor: "#808A9D", textTransform: 'uppercase' }}>{coin.symbol}</span>
-                                                    </div>
+                                                        <div style={{ display: 'flex', justifyContent: 'right', alignItems: 'center', flexDirection: 'row' }}>
+                                                            <span>{profit > 0 ? <ArrowDropUpOutlinedIcon fontSize='small' style={{ color: '#16C784' }} /> : <ArrowDropDownOutlinedIcon fontSize='small' style={{ color: '#EA3943' }} />}</span>
+                                                            <span>{Math.abs(coin.price_change_percentage_24h.toFixed(2))}%</span>
+                                                        </div>
+                                                    </TableCell>
 
-                                                </TableCell>
-
-                                                <TableCell align="right" style={{
-                                                    fontFamily: 'Inter', fontStyle: 'normal',
-                                                    fontSize: '12px',
-                                                    fontWeight: 500,
-                                                }}>${numberWithCommas(coin.current_price.toFixed(2))}</TableCell>
-
-                                                <TableCell align="right" style={{
-                                                    fontFamily: 'Inter', fontStyle: 'normal',
-                                                    fontSize: '12px', color: profit > 0 ? "#16C784" : "#EA3943",
-                                                    fontWeight: 500,
-                                                }}>
-                                                    <div style={{ display: 'flex', justifyContent: 'right', alignItems: 'center', flexDirection: 'row' }}>
-                                                        <span>{profit > 0 ? <ArrowDropUpOutlinedIcon fontSize='small' style={{ color: '#16C784' }} /> : <ArrowDropDownOutlinedIcon fontSize='small' style={{ color: '#EA3943' }} />}</span>
-                                                        <span>{Math.abs(coin.price_change_percentage_24h.toFixed(2))}%</span>
-                                                    </div>
-                                                </TableCell>
-
-                                                <TableCell align="right" style={{
-                                                    fontFamily: 'Inter', fontStyle: 'normal',
-                                                    fontSize: '12px', color: profit_two > 0 ? "#16C784" : "#EA3943",
-                                                    fontWeight: 500,
-                                                }}>
-                                                    <div style={{ display: 'flex', justifyContent: 'right', alignItems: 'center', flexDirection: 'row' }}>
-                                                        <span>{profit_two > 0 ? <ArrowDropUpOutlinedIcon fontSize='small' style={{ color: '#16C784' }} /> : <ArrowDropDownOutlinedIcon fontSize='small' style={{ color: '#EA3943' }} />}</span>
-                                                        <span>{Math.abs(coin.price_change_percentage_7d_in_currency.toFixed(2))}%</span>
-                                                    </div>
-                                                </TableCell>
+                                                    <TableCell align="right" style={{
+                                                        fontFamily: 'Inter', fontStyle: 'normal',
+                                                        fontSize: '12px', color: profit_two > 0 ? "#16C784" : "#EA3943",
+                                                        fontWeight: 500,
+                                                    }}>
+                                                        <div style={{ display: 'flex', justifyContent: 'right', alignItems: 'center', flexDirection: 'row' }}>
+                                                            <span>{profit_two > 0 ? <ArrowDropUpOutlinedIcon fontSize='small' style={{ color: '#16C784' }} /> : <ArrowDropDownOutlinedIcon fontSize='small' style={{ color: '#EA3943' }} />}</span>
+                                                            <span>{Math.abs(coin.price_change_percentage_7d_in_currency.toFixed(2))}%</span>
+                                                        </div>
+                                                    </TableCell>
 
 
 
-                                                <TableCell align="right" style={{
-                                                    fontFamily: 'Inter', fontStyle: 'normal',
-                                                    fontSize: '12px',
-                                                    fontWeight: 500,
-                                                }}>${numberWithCommas(coin.market_cap.toString())}</TableCell>
+                                                    <TableCell align="right" style={{
+                                                        fontFamily: 'Inter', fontStyle: 'normal',
+                                                        fontSize: '12px',
+                                                        fontWeight: 500,
+                                                    }}>${numberWithCommas(coin.market_cap.toString())}</TableCell>
 
-                                                <TableCell align="right" style={{
-                                                    fontFamily: 'Inter', fontStyle: 'normal',
-                                                    fontSize: '12px',
-                                                    fontWeight: 500,
-                                                }}>
+                                                    <TableCell align="right" style={{
+                                                        fontFamily: 'Inter', fontStyle: 'normal',
+                                                        fontSize: '12px',
+                                                        fontWeight: 500,
+                                                    }}>
 
-                                                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'right', flexDirection: 'column', margin: 0, padding: 0 }}>
-                                                        <span style={{ fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '11px', fontColor: "#222531", }}>${numberWithCommas(coin.total_volume.toString())}</span>
-                                                        <span style={{ fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 300, fontSize: '9px', fontColor: "#808A9D", }}>{numberWithCommas(coin.circulating_supply.toString())} BTC</span>
-                                                    </div>
+                                                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'right', flexDirection: 'column', margin: 0, padding: 0 }}>
+                                                            <span style={{ fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 500, fontSize: '11px', fontColor: "#222531", }}>${numberWithCommas(coin.total_volume.toString())}</span>
+                                                            <span style={{ fontFamily: 'Inter', fontStyle: 'normal', fontWeight: 300, fontSize: '9px', fontColor: "#808A9D", }}>{numberWithCommas(coin.circulating_supply.toString().slice(0, -3))} BTC</span>
+                                                        </div>
 
-                                                </TableCell>
+                                                    </TableCell>
 
 
-                                                <TableCell align="right" style={{
-                                                    fontFamily: 'Inter', fontStyle: 'normal',
-                                                    fontSize: '12px',
-                                                    fontWeight: 500,
-                                                }}>{numberWithCommas(coin.circulating_supply.toString())} BTC
+                                                    <TableCell align="right" style={{
+                                                        fontFamily: 'Inter', fontStyle: 'normal',
+                                                        fontSize: '12px',
+                                                        fontWeight: 500,
+                                                    }}>{numberWithCommas(coin.circulating_supply.toString().slice(0, -3))} BTC
 
-                                                    <LinearProgress variant="determinate" color="inherit" value={(coin.circulating_supply / coin.total_supply) * 100}
-                                                        style={{
-                                                            marginTop: '7px',
-                                                            backgroundColor: '#EFF2F5',
-                                                        }} />
-                                                </TableCell>
+                                                        <LinearProgress variant="determinate" color="inherit" value={(coin.circulating_supply / coin.total_supply) * 100}
+                                                            style={{
+                                                                marginTop: '7px',
+                                                                backgroundColor: '#EFF2F5',
+                                                            }} />
+                                                    </TableCell>
 
-                                                <TableCell align="right"><MoreVertIcon sx={{ color: '#ABB4C2' }} fontSize='small' /></TableCell>
-                                            </TableRow>
-                                        );
-                                    })}
+                                                    <TableCell align="right"><MoreVertIcon sx={{ color: '#ABB4C2' }} fontSize='small' /></TableCell>
+                                                </TableRow>
+                                            );
+                                        })}
                                 {/* {emptyRows > 0 && (
-                                <TableRow
-                                    style={{
-                                        height: (53) * emptyRows,
-                                    }}
-                                >
-                                    <TableCell colSpan={6} />
-                                </TableRow>
-                            )} */}
+                                    <TableRow
+                                        style={{
+                                            height: (53) * emptyRows,
+                                        }}
+                                    >
+                                        <TableCell colSpan={6} />
+                                    </TableRow>
+                                )} */}
                             </TableBody>
                         </Table>
                     </TableContainer>

@@ -44,7 +44,7 @@ const Banner = () => {
                             component="div"
                             sx={{
                                 mr: 2,
-                                display: { xs: 'none', md: 'flex' },
+                                display: { xs: 'none', sm: 'flex' },
                                 fontWeight: 700,
                                 fontFamily: 'Inter',
                                 fontStyle: 'normal',
@@ -58,7 +58,16 @@ const Banner = () => {
                             Top 100 Cryptocurrencies by Market Cap
                         </Typography>
 
-                        <Stack direction="row" spacing={2} style={{ marginTop: 20, marginBottom: 20, }}>
+                        <Stack direction="row"
+                            spacing={2}
+                            style={{
+                                marginTop: 20,
+                                marginBottom: 20,
+                            }}
+
+                            //sx={{ visibility: { xs: 'hidden', md: 'visible' } }}
+                            sx={{ display: { xs: 'none', sm: 'flex' } }}
+                        >
                             <CustomButton variant="contained" startIcon={<StarBorderOutlinedIcon fontSize="small" />} size="small" disableElevation>
                                 Favourites
                             </CustomButton>
